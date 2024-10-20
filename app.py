@@ -4,7 +4,7 @@ from transformers import pipeline
 # Load the LLM from Hugging Face
 @st.cache(allow_output_mutation=True)
 def load_model():
-    return pipeline("text-generation", model="EleutherAI/gpt-neo-125M")
+    return pipeline("text-generation", model="EleutherAI/gpt-j-6B")
 
 llm = load_model()
 
@@ -12,7 +12,7 @@ llm = load_model()
 def get_recommendation(industry, product_objective):
     prompt = (f"Recommend the best AI/ML models or APIs for {product_objective} in the {industry} industry."
               f" Provide the model name, a brief description, and suggested APIs or Tools")
-    response = llm(prompt, max_length=500, num_return_sequences=1)
+    response = llm(prompt, max_length=250, num_return_sequences=1)
     return response[0]['generated_text']
 
 # Placeholder for your name and LinkedIn profile
@@ -40,4 +40,4 @@ if st.button("Recommend AI/ML Models/APIs"):
     st.write(recommendations)
 
 st.write("### About the Tool")
-st.write("This tool uses an open-source LLM to generate recommendations for AI/ML models or APIs based on the selected industry and use case.")
+st.write("This tool uses the GPT-J-6B model to generate recommendations for AI/ML models or APIs based on the selected industry and use case.")
