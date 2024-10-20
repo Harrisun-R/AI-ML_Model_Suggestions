@@ -10,9 +10,9 @@ llm = load_model()
 
 # Function to get recommendations from LLM based on input
 def get_recommendation(industry, use_case):
-    prompt = (f"Recommend the best AI/ML models or APIs for {use_case} in the {industry} industry."
+    prompt = (f"Recommend the best AI/ML models or APIs for {product_objective} in the {industry} industry."
               f" Provide the model name, a brief description, and suggested APIs or Tools")
-    response = llm(prompt, max_length=200, num_return_sequences=1)
+    response = llm(prompt, max_length=200, num_return_sequences=2)
     return response[0]['generated_text']
 
 # Placeholder for your name and LinkedIn profile
