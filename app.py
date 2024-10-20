@@ -10,12 +10,13 @@ llm = load_model()
 
 # Function to get recommendations from LLM based on input
 def get_recommendation(industry, use_case):
-    prompt = f"Recommend the best AI/ML models or APIs for {use_case} in the {industry} industry."
-    response = llm(prompt, max_length=100, num_return_sequences=1)
+    prompt = (f"Recommend the best AI/ML models or APIs for {use_case} in the {industry} industry."
+              f" Provide the model name, a brief description, and suggested APIs or Tools"
+    response = llm(prompt, max_length=200, num_return_sequences=1)
     return response[0]['generated_text']
 
 # Placeholder for your name and LinkedIn profile
-NAME = "Harrisun"
+NAME = "Harrisun Raj Mohan"
 LINKEDIN_URL = "https://www.linkedin.com/in/harrisun-raj-mohan/"
 
 # Streamlit App
@@ -25,9 +26,11 @@ st.write(f"[Connect on LinkedIn]({LINKEDIN_URL})")
 
 st.header("Industry and Use Case Selection")
 industry = st.selectbox("Select Industry", ["Finance", "Healthcare", "E-commerce", "Manufacturing"])
-use_case = st.selectbox("Select Use Case", ["Fraud Detection", "Credit Scoring", "Disease Prediction", "Medical Imaging", 
-                                            "Recommendation Systems", "Customer Segmentation", "Predictive Maintenance", 
-                                            "Supply Chain Optimization"])
+product_objective = st.selectbox("Select Product Objective", ["Improve Fraud Detection", "Enhance Credit Scoring", 
+                                                             "Predict Diseases", "Optimize Medical Imaging", 
+                                                             "Build Recommendation Systems", "Segment Customers", 
+                                                             "Enable Predictive Maintenance", 
+                                                             "Optimize Supply Chain"])
 
 # Generate recommendations from the LLM
 if st.button("Recommend AI/ML Models/APIs"):
