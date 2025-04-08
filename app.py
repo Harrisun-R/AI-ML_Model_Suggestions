@@ -13,11 +13,14 @@ headers = {
 
 # Function to get recommendations from LLM based on input
 def get_recommendation(industry, product_objective):
-    prompt = (f"Suggest 2-3 AI/ML models or APIs suitable for {product_objective} in the {industry} industry.\n\n"
-              f" For each recommendation, include:\n"
-              f"- Name of the model or API\n"
-              f"- One-line purpose\n"
-              f"- Relevant tools or platforms"f"Keep the response concise and to the point.")
+    prompt = ("Suggest 2-3 AI/ML models or APIs suitable for Improve Fraud Detection in the Finance industry.\n"
+              "- **Model:** Isolation Forest\n"
+              "  **Purpose:** Detects anomalies in transaction data\n"
+              "  **Tools:** Scikit-learn, AWS Fraud Detector\n"
+              "- **Model:** AutoEncoder Neural Networks\n"
+              "  **Purpose:** Identifies outliers in high-dimensional data\n"
+              "  **Tools:** TensorFlow, PyTorch\n\n"
+              f"Now suggest for {product_objective} in the {industry} industry:\n")
     # response = llm(prompt, max_length=250, num_return_sequences=1)
     # return response[0]['generated_text']
     payload = {
