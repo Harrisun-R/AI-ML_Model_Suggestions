@@ -56,7 +56,7 @@ product_objective = st.selectbox("Select Product Objective", ["Improve Fraud Det
 # Generate recommendations from the LLM
 if st.button("Recommend AI/ML Models/APIs"):
     with st.spinner('Fetching recommendations...'):
-        result = clean_output(query_huggingface(industry, product_objective))
+        result = query_huggingface(industry, product_objective)
     st.subheader(f"Recommended Models/APIs for {product_objective} in {industry}:")
     st.write(result, language="markdown")
 
