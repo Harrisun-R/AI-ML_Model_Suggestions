@@ -20,14 +20,9 @@ def clean_output(text):
 
 # Function to get recommendations from LLM based on input
 def query_huggingface(industry, product_objective):
-    prompt = (f"Suggest 2 to 3 AI/ML models or APIs suitable for {product_objective} in the {industry} industry.\n"
-              f"For each, follow this format:\n"
-              f"Model: <Name>\n"
-              f"Purpose: <One-line purpose>\n"
-              f"Tools: <Relevant APIs, Libraries, or Platforms>\n"
-              f"Keep the response concise and avoid any extra explanation.")
-    # response = llm(prompt, max_length=250, num_return_sequences=1)
-    # return response[0]['generated_text']
+    prompt = (f"Suggest 2 to 3 AI or ML models or APIs suitable for {product_objective} in the {industry} industry. "
+              f"For each, include the model or API name, its purpose in one sentence, and the tools or libraries that can be used. "
+              f"Be concise. Do not include extra explanations or repeat the question.")
     payload = {
         "inputs": prompt,
         "parameters": {"max_new_tokens": 300, "temperature": 0.9},
