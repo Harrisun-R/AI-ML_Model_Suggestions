@@ -19,7 +19,7 @@ def get_recommendation(industry, product_objective):
     return response[0]['generated_text']'''
     payload = {
         "inputs": prompt,
-        "parameters": {"max_new_tokens": 250, "temperature": 0.7},
+        "parameters": {"max_new_tokens": 250, "temperature": 0.9},
     }
     response = requests.post(API_URL, headers=headers, json=payload)
     if response.status_code == 200:
@@ -52,4 +52,4 @@ if st.button("Recommend AI/ML Models/APIs"):
     st.write(recommendations)
 
 st.write("### About the Tool")
-st.write("This tool uses the Llama-2-7b model to generate recommendations for AI/ML models or APIs based on the selected industry and use case.")
+st.write("This tool uses the gpt2 model to generate recommendations for AI/ML models or APIs based on the selected industry and use case.")
