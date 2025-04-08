@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import re
 
 # Load the Hugging Face token securely
 HF_TOKEN = st.secrets["huggingface"]["token"]
@@ -11,8 +12,14 @@ headers = {
     "Content-Type": "application/json"
 }
 
+def clean_output(text):
+    # Only keep lines starting with Model, Purpose, Tools
+    lines = text.split("\n")
+    cleaned_lines = [line for line in lines if re.match(r"^(Model|Purpose|Tools):", line.strip())]
+    return "\n".join(cleaned_lines)
+
 # Function to get recommendations from LLM based on input
-def get_recommendation(industry, product_objective):
+def query_huggingface(industry, product_objective):
     prompt = (f"Suggest 2 to 3 AI/ML models or APIs suitable for {product_objective} in the {industry} industry.\n"
               f"For each, follow this format:\n"
               f"Model: <Name>\n"
@@ -51,9 +58,9 @@ product_objective = st.selectbox("Select Product Objective", ["Improve Fraud Det
 # Generate recommendations from the LLM
 if st.button("Recommend AI/ML Models/APIs"):
     with st.spinner('Fetching recommendations...'):
-        recommendations = get_recommendation(industry, product_objective)
+        result = clean_output(query_huggingface(industry, product_objective))
     st.subheader(f"Recommended Models/APIs for {product_objective} in {industry}:")
-    st.write(recommendations)
+    st.write(result)
 
 st.write("### About the Tool")
 st.write("This tool uses the gpt2 model to generate recommendations for AI/ML models or APIs based on the selected industry and use case.")
