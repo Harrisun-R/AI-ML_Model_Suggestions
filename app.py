@@ -3,7 +3,7 @@ import requests
 
 # Load the Hugging Face token securely
 HF_TOKEN = st.secrets["huggingface"]["token"]
-API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-base"
+API_URL = "https://api-inference.huggingface.co/models/manycore-research/SpatialLM-Llama-1B"
 
 
 headers = {
