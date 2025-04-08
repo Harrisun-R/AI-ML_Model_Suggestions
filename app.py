@@ -1,5 +1,5 @@
 import streamlit as st
-from transformers import pipeline
+import requests
 
 # Load the Hugging Face token securely
 HF_TOKEN = st.secrets["huggingface"]["token"]
