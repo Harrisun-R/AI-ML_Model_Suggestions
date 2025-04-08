@@ -4,7 +4,7 @@ import re
 
 # Load the Hugging Face token securely
 HF_TOKEN = st.secrets["huggingface"]["token"]
-API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-large"
+API_URL = "https://api-inference.huggingface.co/models/openai-community/gpt2"
 
 
 headers = {
