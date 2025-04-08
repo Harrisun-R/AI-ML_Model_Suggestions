@@ -4,7 +4,7 @@ import re
 
 # Load the Hugging Face token securely
 HF_TOKEN = st.secrets["huggingface"]["token"]
-API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-base"
+API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-large"
 
 
 headers = {
@@ -20,12 +20,15 @@ def clean_output(text):
 
 # Function to get recommendations from LLM based on input
 def query_huggingface(industry, product_objective):
-    prompt = (f"Suggest 2 to 3 AI or ML models or APIs suitable for {product_objective} in the {industry} industry. "
-              f"For each, include the model or API name, its purpose in one sentence, and the tools or libraries that can be used. "
-              f"Be concise. Do not include extra explanations or repeat the question.")
+    prompt = (f"Suggest 2 or 3 AI or ML models or APIs for {product_objective} in the {industry} industry. "
+              f"For each, include:\n"
+              f"- Model or API Name\n"
+              f"- One-line Purpose\n"
+              f"- Relevant Tools or Libraries\n\n"
+              f"Keep it brief. Do not explain anything beyond the essentials.")
     payload = {
         "inputs": prompt,
-        "parameters": {"max_new_tokens": 300, "temperature": 0.9},
+        "parameters": {"max_new_tokens": 250, "temperature": 0.9},
     }
     response = requests.post(API_URL, headers=headers, json=payload)
     if response.status_code == 200:
@@ -55,7 +58,7 @@ if st.button("Recommend AI/ML Models/APIs"):
     with st.spinner('Fetching recommendations...'):
         result = clean_output(query_huggingface(industry, product_objective))
     st.subheader(f"Recommended Models/APIs for {product_objective} in {industry}:")
-    st.write(result)
+    st.write(result, language="markdown")
 
 st.write("### About the Tool")
 st.write("This tool uses the gpt2 model to generate recommendations for AI/ML models or APIs based on the selected industry and use case.")
