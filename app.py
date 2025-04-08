@@ -13,13 +13,16 @@ headers = {
 
 # Function to get recommendations from LLM based on input
 def get_recommendation(industry, product_objective):
-    prompt = (f"Recommend the best AI/ML models or APIs for {product_objective} in the {industry} industry."
-              f" Provide the model name, a brief description, and suggested APIs or Tools")
-    '''response = llm(prompt, max_length=250, num_return_sequences=1)
-    return response[0]['generated_text']'''
+    prompt = (f"Suggest 2-3 AI/ML models or APIs suitable for {product_objective} in the {industry} industry.\n\n"
+              f" For each recommendation, include:\n"
+              f"- Name of the model or API\n"
+              f"- One-line purpose\n"
+              f"- Relevant tools or platforms"f"Keep the response concise and to the point.")
+    # response = llm(prompt, max_length=250, num_return_sequences=1)
+    # return response[0]['generated_text']
     payload = {
         "inputs": prompt,
-        "parameters": {"max_new_tokens": 250, "temperature": 0.9},
+        "parameters": {"max_new_tokens": 300, "temperature": 0.9},
     }
     response = requests.post(API_URL, headers=headers, json=payload)
     if response.status_code == 200:
