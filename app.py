@@ -1,19 +1,31 @@
 import streamlit as st
 from transformers import pipeline
 
-# Load the LLM from Hugging Face
-@st.cache(allow_output_mutation=True)
-def load_model():
-    return pipeline("text-generation", model="EleutherAI/gpt-j-6B")
+# Load the Hugging Face token securely
+HF_TOKEN = st.secrets["huggingface"]["token"]
+API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf"
 
-llm = load_model()
+
+headers = {
+    "Authorization": f"Bearer {HF_TOKEN}",
+    "Content-Type": "application/json"
+}
 
 # Function to get recommendations from LLM based on input
 def get_recommendation(industry, product_objective):
     prompt = (f"Recommend the best AI/ML models or APIs for {product_objective} in the {industry} industry."
               f" Provide the model name, a brief description, and suggested APIs or Tools")
-    response = llm(prompt, max_length=250, num_return_sequences=1)
-    return response[0]['generated_text']
+    '''response = llm(prompt, max_length=250, num_return_sequences=1)
+    return response[0]['generated_text']'''
+    payload = {
+        "inputs": prompt,
+        "parameters": {"max_new_tokens": 250, "temperature": 0.7},
+    }
+    response = requests.post(API_URL, headers=headers, json=payload)
+    if response.status_code == 200:
+        return response.json()[0]["generated_text"]
+    else:
+        return f"Error: {response.status_code} - {response.text}"
 
 # Placeholder for your name and LinkedIn profile
 NAME = "Harrisun Raj Mohan"
@@ -40,4 +52,4 @@ if st.button("Recommend AI/ML Models/APIs"):
     st.write(recommendations)
 
 st.write("### About the Tool")
-st.write("This tool uses the GPT-J-6B model to generate recommendations for AI/ML models or APIs based on the selected industry and use case.")
+st.write("This tool uses the Llama-2-7b model to generate recommendations for AI/ML models or APIs based on the selected industry and use case.")
