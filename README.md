@@ -14,5 +14,5 @@ This AI/ML Decision Support Tool utilizes a small, free Large Language Model (LL
 ## How to Run
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/AI-ML-Decision-Support-LLM.git
+   git clone https://github.com/Harrisun-R/AI-ML-Decision-Support-LLM.git
    cd AI-ML-Decision-Support-LLM
