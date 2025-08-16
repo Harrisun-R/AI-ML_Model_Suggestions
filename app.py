@@ -78,13 +78,31 @@ st.title("🤖 AI/ML Decision Support Tool")
 st.write(f"Developed by **{NAME}** · [LinkedIn]({LINKEDIN_URL})")
 
 st.header("🔍 Industry and Use Case Selection")
-industry = st.selectbox("Select Industry", ["Finance", "Healthcare", "E-commerce", "Manufacturing"])
-product_objective = st.selectbox("Select Product Objective", [
+
+# --- Industry Selection with custom input ---
+industry_options = ["Finance", "Healthcare", "E-commerce", "Manufacturing", "Other (Type Manually)"]
+industry_choice = st.selectbox("Select Industry", industry_options)
+
+if industry_choice == "Other (Type Manually)":
+    industry = st.text_input("Enter your custom industry")
+else:
+    industry = industry_choice
+
+# --- Product Objective Selection with custom input ---
+objective_options = [
     "Improve Fraud Detection", "Enhance Credit Scoring",
     "Predict Diseases", "Optimize Medical Imaging",
     "Build Recommendation Systems", "Segment Customers",
-    "Enable Predictive Maintenance", "Optimize Supply Chain"
-])
+    "Enable Predictive Maintenance", "Optimize Supply Chain",
+    "Other (Type Manually)"
+]
+product_choice = st.selectbox("Select Product Objective", objective_options)
+
+if product_choice == "Other (Type Manually)":
+    product_objective = st.text_input("Enter your custom product objective")
+else:
+    product_objective = product_choice
+
 
 # Generate recommendations from OpenRouter LLM
 if st.button("🚀 Recommend AI/ML Models/APIs"):
